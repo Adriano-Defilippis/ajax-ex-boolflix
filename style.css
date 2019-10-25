@@ -1,0 +1,232 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  font-family: 'lato';
+}
+
+a{
+  text-decoration-line: none;
+  color: #58402c;
+}
+
+a:hover{
+
+  cursor: pointer;
+
+  border-bottom: 4px solid lightsteelblue;
+}
+
+ul{
+  list-style: none;
+}
+
+body{
+  background-color: grey;
+}
+
+header{
+  background-color: black;
+
+}
+/*  */
+aside.list-filter{
+  height: 100%;
+  width: 20vw;
+  float:left;
+}
+
+fieldset{
+  color: white;
+  width: 100%;
+  float: left;
+}
+
+.containermsg {
+  width: 80%;
+  height: 80vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-header{
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1{
+  color: red;
+
+}
+
+
+#searchBar{
+  height: 25px;
+  text-transform: capitalize;
+}
+
+.aside_rgt{
+
+  margin: 20px 10px;
+}
+
+#genere_movies{
+  width: 20vw;
+
+  display: flex;
+  flex-direction: column;
+
+  background-color: lightgrey;
+
+  border-radius: 5px;
+
+  padding: 10px 20px;
+  
+
+}
+
+#genere_movies a{
+
+  /* max-width: 45%; */
+
+  margin-bottom: 5px;
+
+  border-radius: 20%;
+
+}
+
+#consol_page{
+  
+}
+
+.container{
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+}
+
+.container::after{
+  display: table;
+  content: "";
+  clear: both;
+}
+
+.wrapper{
+  width: 80vw;
+  height: 90vh;
+  float: right;
+
+  overflow: auto;
+  margin-top: 20px;
+}
+
+.wrapper::after{
+  display: table;
+  content: "";
+  clear: both;
+}
+
+h2.page{
+  color: #58402c;
+  margin-left: 20px;
+}
+
+.card{
+  font-weight: lighter;
+  float: left;
+  width: 342px;
+  height: 510px;
+  margin: 20px;
+  border: 4px solid white;
+  position: relative;
+}
+
+.card img{
+  width: 100%;
+  height: 100%;
+}
+
+.card:hover ul{
+  display: block;
+}
+
+.img-wrapper{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: -1;
+
+}
+
+img.poster{
+  width: 100%;
+  height: 100%;
+}
+
+.card:hover .info-wrapper{
+  display: block;
+}
+
+.info-wrapper{
+  display: none;
+  width: 100%;
+  height: 100%
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  overflow: auto;
+}
+
+.wrapper ul{
+  display: none;
+  color: white;
+  width: 100%;
+  height: 100%;
+  padding: 75px 20px;
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  background-color: rgba(41, 49, 51, 0.9);
+  overflow: auto;
+}
+
+.info-wrapper ul{
+  padding: 50px 20px;
+}
+
+.info-wrapper ul li{
+  margin: 10px 0;
+}
+
+
+
+.wrapper ul li{
+  margin: 10px 0;
+}
+
+
+/* HELPER CLASS */
+.cl-yw{
+  color: yellow;
+}
+
+.displaynone{
+  display: none;
+}
+
+.hide{
+  display: none;
+}
+
+#prev,
+#next{
+  cursor: pointer;
+}

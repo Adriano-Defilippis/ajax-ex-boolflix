@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <!-- FONT: LATO -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+    <!-- FONT: FONTAWESOME -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+
+    <!-- JS: JQUERY -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- JS: MOMENT -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
+
+    <!-- JS: HANDLEBARS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js" charset="utf-8"></script>
+    <!-- TEMPLATE: MESSAGE MENU -->
+    <script id="templateinfofilm" type="text/x-handlebars-template">
+
+      <div class="card" id="{{id}}">
+
+          <div class= "img-wrapper"><img src="{{{img}}}" alt="sss"></div>
+  
+          <div class= "info-wrapper">
+            <ul>
+              <li><h1 class="movie-title"> {{title}}</h1> </li>
+              <li><span class="bold">Tipo:</span> <span> {{type}}</span> </li>
+              <li><span class="bold">Genere:</span><span class="movie-genre"></span></li>
+              <li><span class="bold">Titolo originale:</span><span class="original_title"> {{originalTitle}}</span></li>
+              <li><span class="bold">Lingua:</span><span class="movie-lan"> {{{movieLan}}} <span class="flag-icon flag-icon-{{nazione}}"></span></li>
+              <li><span class="bold">Voto:</span><span class="movie-rate"> {{{movieRate}}}</span></li>
+              <li><span class="bold">Overview:</span><span class="movie-rate"> {{{overview}}}</span></li>
+              <li><span class="bold">Cast:</span><span class="movie-cast"> {{cast}}</span></li>
+            </ul>
+          </div>
+        </div>
+
+  </script>
+
+  <!-- TEMPLATE CONSOLE  NAVIGATE PAGES -->
+  <script id="template_nav_page" type="text/x-handlebars-template">
+    <h2 class="page">
+      <span id="prevpage"><i class="fas fa-step-backward"></i></span> Page <span>{{paginacorrente}}</span> di <span>{{totalepagine}}</span>
+      <span id="nextpage"><i class="fas fa-step-forward"></i></span>
+    </h2>
+  </script>
+
+  <!-- TEMPLATE LISTA GENERI -->
+  <script id="template_generi_list" type="text/x-handlebars-template">
+    <h1>{{bla}}</h1>
+    <a id="{{id_genere}}" class="genere" href="#">{{nome}}</a>
+  </script>
+
+    <!-- CSS: MY STYLE -->
+    <link rel="stylesheet" href="style.css">
+    <!-- JS: MY SCRIPT -->
+    <script src="script.js" charset="utf-8"></script>
+    <!-- IMG: ICON -->
+    <link rel="shortcut icon" href="img/shortcut.png">
+    <title>BoolFLIX</title>
+  </head>
+  <body>
+
+    <header>
+      <div class="container-header">
+        <h1>BOOLFLIX</h1>
+        <input id="query_search" type="text">
+      </div>
+    </header>
+    
+    <div class="container">
+
+      <aside class="aside_rgt">
+        <div id="genere_movies"></div>
+        
+      </aside>
+      
+      <div class="wrapper wrapper_1">
+          <div id = "consol_page"></div>
+      </div>
+
+    </div>
+
+  </body>
+</html>
