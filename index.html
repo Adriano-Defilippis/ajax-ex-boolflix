@@ -21,17 +21,16 @@
       <div class="card" id="{{id}}">
 
           <div class= "img-wrapper"><img src="{{{img}}}" alt="sss"></div>
-  
+
           <div class= "info-wrapper">
             <ul>
               <li><h1 class="movie-title"> {{title}}</h1> </li>
-              <li><span class="bold">Tipo:</span> <span> {{type}}</span> </li>
-              <li><span class="bold">Genere:</span><span class="movie-genre"></span></li>
-              <li><span class="bold">Titolo originale:</span><span class="original_title"> {{originalTitle}}</span></li>
-              <li><span class="bold">Lingua:</span><span class="movie-lan"> {{{movieLan}}} <span class="flag-icon flag-icon-{{nazione}}"></span></li>
-              <li><span class="bold">Voto:</span><span class="movie-rate"> {{{movieRate}}}</span></li>
-              <li><span class="bold">Overview:</span><span class="movie-rate"> {{{overview}}}</span></li>
-              <li><span class="bold">Cast:</span><span class="movie-cast"> {{cast}}</span></li>
+              <li><span class="bold">Genere: </span><span class="movie-genre"></span></li>
+              <li><span class="bold">Titolo originale: </span><span class="original_title"> {{originalTitle}}</span></li>
+              <li><span class="bold">Lingua: </span><span class="movie-lan"> {{{movieLan}}} <span class="flag-icon flag-icon-{{movieLan}}"></span></li>
+              <li><span class="bold">Voto: </span><span class="movie-rate" voteref="id-{{id}}"></span></li>
+              <li><span class="bold">Overview: </span><span class="movie-rate"> {{{overview}}}</span></li>
+              <li><span class="bold">Cast: </span><span class="movie-cast"> {{cast}}</span></li>
             </ul>
           </div>
         </div>
@@ -54,6 +53,7 @@
 
     <!-- CSS: MY STYLE -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="flag-icon-css/css/flag-icon.css">
     <!-- JS: MY SCRIPT -->
     <script src="script.js" charset="utf-8"></script>
     <!-- IMG: ICON -->
@@ -68,14 +68,14 @@
         <input id="query_search" type="text">
       </div>
     </header>
-    
+
     <div class="container">
 
       <aside class="aside_rgt">
         <div id="genere_movies"></div>
-        
+
       </aside>
-      
+
       <div class="wrapper wrapper_1">
           <div id = "consol_page"></div>
       </div>

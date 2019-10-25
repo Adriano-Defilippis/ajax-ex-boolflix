@@ -16,44 +16,43 @@ function printConsolenavPages(data){
 
 function prinResult(data, append_to){
 
-    
+
     var source = $('#templateinfofilm').html();
     var template = Handlebars.compile(source);
 
     var vote_count = Math.ceil(data.vote_average / 2);
-    
+
 
     console.log("stars average", vote_count);
-    
+
 
     var context = {
         id: data.id,
         img: controlimgnull(data.poster_path),
         title: data.title,
-        titoloorig: data.original_title,
-        lingua: data.original_language,
+        originalTitle: data.original_title,
+        movieLan: data.original_language,
+        movieRate: data.vote_average,
         overview: data.overview,
-        
-        voto: "voto",
+
         voteref: "id-" + data.id
     };
 
     var html = template(context);
 
-    append_to.append(html);  
+    append_to.append(html);
 
-    starsGener(vote_count, data.id);
-
+    // Appende stelle per il Vote Average
+    starsGener(data.vote_average, data.id);
+    // Stampa il genere per ogni filnm
     printGenres(data.id, "movie")
 }
 
+// STAmpa la lista dei gereri disponibili da api
 function printGeneriLis(data){
     /* VERSIONE VANILLA JS */
     var arr_generi = data.genres;
-   
-   /* var newDiv = document.createElement("div"); 
-    
-   newDiv.className = 'genere_class'; */
+
 
    /* VERSIONE HANDLEBARS */
    /* STAMPO IL TITOLO DELLA LISTA GENERATA DINAMICAMENTE */
@@ -63,16 +62,11 @@ function printGeneriLis(data){
                     bla : "Generi Film"
                 };
     var html_1 = template(context_1);
-    $('#genere_movies').append(html_1);             
-    
+    $('#genere_movies').append(html_1);
+
     for (let i = 0; i < arr_generi.length; i++) {
         const name = arr_generi[i].name;
 
-        /* var ref = document.createElement("a");
-            var newContent = document.createTextNode(name);
-            
-            ref.appendChild(newContent);
-            newDiv.appendChild(ref); */
 
         var context_2 = {
             nome: name,
@@ -81,16 +75,15 @@ function printGeneriLis(data){
 
         var html_2 = template(context_2);
         $('#genere_movies').append(html_2);
-        
-    }
 
-    /* $('.container').append(newDiv); */ 
+    }
 
 }
 
+// Controllo mancanza immagine di copertina
 function controlimgnull(imgurl){
     var src = "";
-  
+
     if (imgurl === null){
       src = "img/sorry.jpg"
     }else{
@@ -102,26 +95,33 @@ function controlimgnull(imgurl){
 // funzione per aggiungere le stelline  nell'html
 function starsGener(score, id) {
 
-console.log("stars generare" , score, id);
+
+
+    vote_average = Math.ceil(score / 2);
+
+    console.log("stars generator" , score, id, vote_average);
 
     //aggiungo le stelline piene
-    for (var i = 1; i <= score; i++) {
-      $(".appendstar[voteref=id-" + id + "]").append("<i class='cl-yw fas fa-star'><i>");
+    for (var i = 1; i <= vote_average; i++) {
+      $(".movie-rate[voteref=id-" + id + "]").append("<i class='cl-yw fas fa-star'><i>");
+
     }
     //aggiungo le stelline vuote
-    for (var j = 1; j <= (5 - score); j++) {
-      $(".appendstar[voteref=id-" + id + "]").append("<i class='fas fa-star'><i>");
+    for (var j = 1; j <= (5 - vote_average); j++) {
+      $(".movie-rate[voteref=id-" + id + "]").append("<i class='fas fa-star'><i>");
+
     }
-  
+
 }
 
+// Stampo il genere per ogni CARD
 function printGenres(id, type){
 
     var genreApi = "https://api.themoviedb.org/3/"+type+"/" + id;
     var apikey = "ad43da61407cf7dd84ab0c94302e0c68";
-  
+
     $.ajax({
-  
+
       url: genreApi,
       method: "GET",
       data: {
@@ -131,21 +131,21 @@ function printGenres(id, type){
       success: function(data){
         console.log("GENERI");
         console.log(data.genres);
-  
+
         var generi = data.genres;
-  
+
         for (var i = 0; i < generi.length; i++) {
           if (i === generi.length - 1) {
             $('#' + id + ' .movie-genre').append(generi[i].name +".");
           }else{
             $('#' + id + ' .movie-genre').append(generi[i].name + ", ");
           }
-  
+
         }
       },
       error: function(errors){
         console.log("errore chiamata genereApi", errors);
-        
+
       }
     });
   }
@@ -160,45 +160,47 @@ function apiForGenereFilter(page, url, apiKey, query, genere_val){
         data: { query: query,
             language: "it-IT",
             api_key: apiKey,
-            page: page }, 
+            page: page },
 
         success: function(data){
 
             var results = data.results;
             getGenreArray(results, genere_val);
-            
-            
+
+
         },
         error: function(error){
             console.log("errore chiamata per tutte le altre pagine");
-            
+
         }
 
     });
- 
+
 
 }
 
+// OTTIENI ARRAY CON FILM IN BASE AL GENERE
 function getGenreArray(data, genere_val) {
-     
+
     $('.page').remove();
     for (let j = 0; j < data.length; j++) {
 
         const el = data[j];
         var arr_genre = el.genre_ids;
         console.log("GETARRGENERE", genere_val, arr_genre, el);
-       
+
         if (arr_genre.includes(Number(genere_val)) && $('.card').length < 50) {
             console.log("GETARRGENERE");
             prinResult(el,$('.wrapper'));
-            
-                       
-        } 
-    }          
-    
-              
+
+
+        }
+    }
+
+
 }
 
+// OTTIENI LA CHIAMATA AJAX PER LA PAGINA SUCCESSIVA SE PRESENTE
 function getDataPageNextPrev(query, pag_n, url, apiKey){
 
     $.ajax({
@@ -213,7 +215,7 @@ function getDataPageNextPrev(query, pag_n, url, apiKey){
             console.log(data);
             var results = data.results;
 
-                        
+
             $('.card').remove();
             /* STAMPA CONSOL NAVIGAZIONE PAGINE */
             printConsolenavPages(data);
@@ -221,20 +223,21 @@ function getDataPageNextPrev(query, pag_n, url, apiKey){
             /* CICLO E STAMPO ARRAI DEI RISULTATI OGGETTI */
             for (let i = 0; i < results.length; i++) {
                 var el =results[i];
-                
+
                 prinResult(el, $('.wrapper'));
             }
-                      
+
         },
         error: function(err){
             console.log("errore chiamata api");
-            
+
         }
     });
 
 
 }
 
+// PRIMA CHIAMATA
 function getData(pag_n,url,apiKey){
 
     var query = $('#query_search').val();
@@ -252,8 +255,8 @@ function getData(pag_n,url,apiKey){
             var results = data.results;
             var total_pages = data.total_pages;
             var page = data.page;
-            
-                        
+
+
             $('.card').remove();
             /* STAMPA CONSOL NAVIGAZIONE PAGINE */
             printConsolenavPages(data);
@@ -264,15 +267,15 @@ function getData(pag_n,url,apiKey){
                 prinResult(el, $('.wrapper'));
             }
 
-            /* EVENTO CLICK PER ANDARE ALLA PAGINA 
+            /* EVENTO CLICK PER ANDARE ALLA PAGINA
             SUCCESSIVA DEI RISULTATI */
             $(document).on("click", "#nextpage", function(){
-                
+
                 page++;
                 navPageNext(page, total_pages, url, apiKey, query);
             });
-            
-            /* EVENTO CLICK PER ANDARE ALLA PAGINA 
+
+            /* EVENTO CLICK PER ANDARE ALLA PAGINA
             PRECEDENTE DEI RISULTATI */
             $(document).on("click", "#prevpage", function(){
 
@@ -281,30 +284,30 @@ function getData(pag_n,url,apiKey){
 
             });
 
-            /* FUNZIONE AZIONE CLICK SUL GNERE PER 
+            /* FUNZIONE AZIONE CLICK SUL GNERE PER
             FILTRO GENERE */
             $(document).on('click','.genere',function(){
 
                 filtereGenresBtn($(this), query, total_pages, url, apiKey);
             });
-                         
+
         },
         error: function(err){
             console.log("errore chiamata api");
-            
+
         }
     });
 }
 
 /* FUNZIONE EVENTO CLICK PER SCORRERE LA PAGINA DEI RISULTATI */
 function navPagePrev(page_counter, url, apiKey, query){
-        
-    /* CONTROLLO PER IL BLOCCO FUNZIONE IN BASE AL 
+
+    /* CONTROLLO PER IL BLOCCO FUNZIONE IN BASE AL
     NUMERO DELLE PAGINE RESTITUITE DAL JSON */
     if (page_counter > 0){
 
         getDataPageNextPrev(query, page_counter, url, apiKey);
-        
+
         console.log(page_counter);
     }
 
@@ -312,16 +315,16 @@ function navPagePrev(page_counter, url, apiKey, query){
 
 /* FUNZIONE EVENTO CLICK PER SCORRERE LA PAGINA DEI RISULTATI */
 function navPageNext(page_counter, total_pages, url, apiKey, query){
-   
-    /* CONTROLLO PER IL BLOCCO FUNZIONE IN BASE AL 
+
+    /* CONTROLLO PER IL BLOCCO FUNZIONE IN BASE AL
     NUMERO DELLE PAGINE RESTITUITE DAL JSON s*/
     if (page_counter < total_pages){
-        
+
         console.log("ciao", total_pages, page_counter);
         getDataPageNextPrev(query, page_counter, url, apiKey)
-    
+
     }
- 
+
 }
 
 /* FUNZIONE EVENTO CLICK FILTRO RISULTATI PER GENERE */
@@ -336,7 +339,7 @@ function filtereGenresBtn(itemClicked, query, total_pages, url, apiKey){
         for (let i = 0; i < total_pages; i++) {
             page_forapi++;
             apiForGenereFilter(page_forapi, url, apiKey, query,genere_val);
-            
+
         }
         page_forapi = 0;
 
@@ -360,7 +363,7 @@ function getGenresNameApi(url, apikey){
         },
         error: function(err){
             console.log("errore chiamata lista generi");
-            
+
         }
     });
 }
@@ -372,7 +375,7 @@ function init() {
     var urlgenresmovie =  "https://api.themoviedb.org/3/genre/movie/list";
 
     var page_counter = 0;
-    
+
     /* API PER RICHIESTA LISTA GENERI */
     getGenresNameApi(urlgenresmovie, apiKey)
     /* EVENTO KEYPRESS SU TASTO INVIO PER AVVIARE LA RICERCA */
@@ -388,11 +391,10 @@ function init() {
         }
     });
 
-    
 
-    
-    
+
+
+
 }
 
 $(document).ready(init);
-
